@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Thư Chúc Tết 10A7</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  height:100vh;
+  background:linear-gradient(120deg,#8b0000,#c30000);
+  overflow:hidden;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* HOA RƠI */
+.flower{
+  position:fixed;
+  top:-50px;
+  font-size:24px;
+  animation: fall linear infinite;
+  opacity:.8;
+}
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+  }
+}
+
+/* BAO THƯ */
+.envelope{
+  width:260px;
+  height:170px;
+  background:#c00000;
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  cursor:pointer;
+  border-radius:10px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:gold;
+  font-size:42px;
+  font-weight:bold;
+  z-index:5;
+}
+
+.envelope::before{
+  content:"";
+  position:absolute;
+  top:0;
+  left:0;
+  width:0;
+  height:0;
+  border-left:130px solid transparent;
+  border-right:130px solid transparent;
+  border-top:85px solid #a80000;
+}
+
+/* THƯ */
+.letter{
+  position:absolute;
+  width:80%;
+  max-width:700px;
+  background:#fff8e7;
+  padding:30px;
+  border-radius:20px;
+  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%) scale(0);
+  transition:.8s;
+  z-index:10;
+}
+
+.letter.show{
+  transform:translate(-50%,-50%) scale(1);
+}
+
+.letter h2{
+  color:#c00000;
+  text-align:center;
+}
+
+.letter p{
+  line-height:1.8;
+  color:#333;
+}
+
+/* PHÁO HOA */
+.firework{
+  position:fixed;
+  width:6px;
+  height:6px;
+  background:transparent;
+  border-radius:50%;
+  animation: explode 1.5s ease-out forwards;
+}
+
+@keyframes explode{
+  to{
+    box-shadow:
+    0 -120px gold,
+    85px -85px red,
+    120px 0 orange,
+    85px 85px pink,
+    0 120px yellow,
+    -85px 85px red,
+    -120px 0 orange,
+    -85px -85px gold;
+    opacity:0;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" style="overflow:auto">
+  <h2>🧧 Chúc Mừng Năm Mới 🧧</h2>
+
+  <p style="text-align:left;font-size:14px;line-height:1.7">
+    <strong>Kính gửi quý thầy cô và các bạn thân mến,</strong><br><br>
+
+    Khi những ngày cuối cùng của năm cũ dần khép lại,
+    mùa xuân mới lại gõ cửa, mang theo niềm tin,
+    hy vọng và những khởi đầu tốt đẹp.
+    Nhân dịp năm mới, tập thể lớp <strong>10A7</strong>
+    xin được gửi tới quý thầy cô cùng toàn thể các bạn
+    những lời chúc mừng chân thành và ấm áp nhất.<br><br>
+
+    <strong>Kính chúc quý thầy cô</strong> luôn dồi dào sức khỏe,
+    tràn đầy nhiệt huyết và niềm vui trong sự nghiệp
+    trồng người cao quý. Mong rằng trong năm mới,
+    thầy cô sẽ tiếp tục là những người truyền cảm hứng,
+    soi sáng tri thức và chắp cánh ước mơ cho bao thế hệ học trò.<br><br>
+
+    <strong>Gửi tới các bạn</strong> lời chúc một năm mới
+    thật nhiều niềm vui, học tập tiến bộ, luôn đoàn kết,
+    yêu thương và cùng nhau tạo nên thật nhiều kỷ niệm đẹp
+    dưới mái trường thân yêu. Mong rằng mỗi chúng ta
+    sẽ không ngừng nỗ lực, dám ước mơ và dám chinh phục
+    những mục tiêu phía trước.<br><br>
+
+    <strong>
+      Chúc năm mới An khang – Thịnh vượng – Hạnh phúc – Thành công.<br>
+      Chúc cho tập thể lớp 10A7 luôn vững vàng, tỏa sáng
+      và gắn kết hơn nữa trong chặng đường sắp tới.
+    </strong><br><br>
+
+    <em>Trân trọng,<br>
+    Tập thể lớp 10A7</em>
+  </p>
+</div>
+
+<script>
+/* MỞ THƯ */
+function openLetter(){
+  document.querySelector('.envelope').style.display='none';
+  document.getElementById('letter').classList.add('show');
+  fireworks();
+}
+
+/* HOA RƠI */
+const flowers = ["🌸","🌺","🌼"];
+for(let i=0;i<30;i++){
+  let f=document.createElement("div");
+  f.className="flower";
+  f.innerText=flowers[Math.floor(Math.random()*flowers.length)];
+  f.style.left=Math.random()*100+"vw";
+  f.style.animationDuration=5+Math.random()*5+"s";
+  f.style.fontSize=18+Math.random()*20+"px";
+  document.body.appendChild(f);
+}
+
+/* PHÁO HOA */
+function fireworks(){
+  setInterval(()=>{
+    let fw=document.createElement("div");
+    fw.className="firework";
+    fw.style.left=Math.random()*100+"vw";
+    fw.style.top=Math.random()*60+"vh";
+    document.body.appendChild(fw);
+    setTimeout(()=>fw.remove(),1500);
+  },400);
+}
+</script>
+<a href="https://huyg15235-lgtm.github.io/tet10a7/#" class="back-home">
+  ⬅ Quay lại trang chính
+</a>
+
+</body>
+</html>
