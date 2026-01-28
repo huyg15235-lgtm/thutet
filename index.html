@@ -82,10 +82,14 @@ body{
   z-index:10;
   max-height:85vh;
   overflow:auto;
+
+  pointer-events:none; /* ⭐ QUAN TRỌNG */
 }
+
 .letter.show{
   opacity:1;
   transform:translate(-50%,-50%) translateY(0) scale(1);
+  pointer-events:auto; /* ⭐ CHO PHÉP CLICK KHI ĐÃ MỞ */
 }
 .close{
   position:absolute;
