@@ -11,16 +11,17 @@ body{
   height:100vh;
   background:linear-gradient(120deg,#8b0000,#c30000);
   overflow:hidden;
-  font-family: 'Segoe UI', sans-serif;
+  font-family:'Segoe UI',sans-serif;
 }
 
-/* HOA RƠI */
+/* HOA MAI – HOA ĐÀO RƠI */
 .flower{
   position:fixed;
   top:-50px;
-  font-size:24px;
-  animation: fall linear infinite;
-  opacity:.8;
+  font-size:26px;
+  animation:fall linear infinite;
+  opacity:.85;
+  pointer-events:none;
 }
 @keyframes fall{
   to{
@@ -38,17 +39,20 @@ body{
   left:50%;
   transform:translate(-50%,-50%);
   cursor:pointer;
-  border-radius:10px;
-  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  border-radius:12px;
+  box-shadow:0 20px 50px rgba(0,0,0,.45);
   display:flex;
   align-items:center;
   justify-content:center;
   color:gold;
   font-size:42px;
-  font-weight:bold;
+  font-weight:800;
   z-index:5;
+  transition:.4s;
 }
-
+.envelope:hover{
+  transform:translate(-50%,-50%) scale(1.05);
+}
 .envelope::before{
   content:"";
   position:absolute;
@@ -64,31 +68,31 @@ body{
 /* THƯ */
 .letter{
   position:absolute;
-  width:80%;
-  max-width:700px;
+  width:85%;
+  max-width:720px;
   background:#fff8e7;
-  padding:30px;
-  border-radius:20px;
-  box-shadow:0 20px 50px rgba(0,0,0,.4);
+  padding:32px;
+  border-radius:22px;
+  box-shadow:0 25px 60px rgba(0,0,0,.45);
   top:50%;
   left:50%;
   transform:translate(-50%,-50%) scale(0);
-  transition:.8s;
+  transition:.8s cubic-bezier(.25,1.5,.5,1);
   z-index:10;
+  overflow:auto;
+  max-height:85vh;
 }
-
 .letter.show{
   transform:translate(-50%,-50%) scale(1);
 }
-
 .letter h2{
   color:#c00000;
   text-align:center;
 }
-
 .letter p{
   line-height:1.8;
   color:#333;
+  font-size:15px;
 }
 
 /* PHÁO HOA */
@@ -98,32 +102,55 @@ body{
   height:6px;
   background:transparent;
   border-radius:50%;
-  animation: explode 1.5s ease-out forwards;
+  animation:explode 1.5s ease-out forwards;
+  pointer-events:none;
 }
-
 @keyframes explode{
   to{
     box-shadow:
-    0 -120px gold,
-    85px -85px red,
-    120px 0 orange,
-    85px 85px pink,
-    0 120px yellow,
-    -85px 85px red,
-    -120px 0 orange,
-    -85px -85px gold;
+      0 -120px gold,
+      85px -85px red,
+      120px 0 orange,
+      85px 85px pink,
+      0 120px yellow,
+      -85px 85px red,
+      -120px 0 orange,
+      -85px -85px gold;
     opacity:0;
   }
+}
+
+/* NÚT QUAY LẠI */
+.back-home{
+  position:fixed;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:linear-gradient(45deg,gold,orange);
+  color:#8b0000;
+  padding:12px 28px;
+  border-radius:40px;
+  text-decoration:none;
+  font-weight:bold;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  z-index:99;
+}
+.back-home:hover{
+  transform:translateX(-50%) scale(1.08);
 }
 </style>
 </head>
 
 <body>
 
-<div class="card" style="overflow:auto">
-  <h2>🧧 Chúc Mừng Năm Mới 🧧</h2>
+<!-- BAO THƯ -->
+<div class="envelope" onclick="openLetter()">10A7</div>
 
-  <p style="text-align:left;font-size:14px;line-height:1.7">
+<!-- THƯ -->
+<div id="letter" class="letter">
+  <h2>🧧 CHÚC MỪNG NĂM MỚI 🧧</h2>
+
+  <p>
     <strong>Kính gửi quý thầy cô và các bạn thân mến,</strong><br><br>
 
     Khi những ngày cuối cùng của năm cũ dần khép lại,
@@ -157,6 +184,11 @@ body{
   </p>
 </div>
 
+<!-- NÚT QUAY LẠI -->
+<a href="https://huyg15235-lgtm.github.io/tet10a7/#" class="back-home">
+  ⬅ Quay lại trang chính
+</a>
+
 <script>
 /* MỞ THƯ */
 function openLetter(){
@@ -166,14 +198,14 @@ function openLetter(){
 }
 
 /* HOA RƠI */
-const flowers = ["🌸","🌺","🌼"];
-for(let i=0;i<30;i++){
+const flowers=["🌸","🌺","🌼","🌼"];
+for(let i=0;i<35;i++){
   let f=document.createElement("div");
   f.className="flower";
   f.innerText=flowers[Math.floor(Math.random()*flowers.length)];
   f.style.left=Math.random()*100+"vw";
-  f.style.animationDuration=5+Math.random()*5+"s";
-  f.style.fontSize=18+Math.random()*20+"px";
+  f.style.animationDuration=5+Math.random()*6+"s";
+  f.style.fontSize=18+Math.random()*22+"px";
   document.body.appendChild(f);
 }
 
@@ -186,12 +218,9 @@ function fireworks(){
     fw.style.top=Math.random()*60+"vh";
     document.body.appendChild(fw);
     setTimeout(()=>fw.remove(),1500);
-  },400);
+  },350);
 }
 </script>
-<a href="https://huyg15235-lgtm.github.io/tet10a7/#" class="back-home">
-  ⬅ Quay lại trang chính
-</a>
 
 </body>
 </html>
