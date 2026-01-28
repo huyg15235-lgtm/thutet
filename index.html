@@ -9,60 +9,60 @@
 body{
   margin:0;
   height:100vh;
-  background:linear-gradient(120deg,#8b0000,#c30000);
+  background:linear-gradient(120deg,#6d0000,#c30000);
   overflow:hidden;
   font-family:'Segoe UI',sans-serif;
 }
 
-/* HOA MAI – HOA ĐÀO RƠI */
+/* HOA RƠI */
 .flower{
   position:fixed;
-  top:-50px;
+  top:-40px;
   font-size:26px;
   animation:fall linear infinite;
-  opacity:.85;
+  opacity:.9;
   pointer-events:none;
 }
 @keyframes fall{
-  to{
-    transform:translateY(110vh) rotate(360deg);
-  }
+  to{ transform:translateY(110vh) rotate(360deg); }
 }
 
-/* BAO THƯ */
+/* PHONG BÌ */
 .envelope{
-  width:260px;
-  height:170px;
+  width:280px;
+  height:180px;
   background:#c00000;
   position:absolute;
   top:50%;
   left:50%;
   transform:translate(-50%,-50%);
+  border-radius:14px;
+  box-shadow:0 25px 60px rgba(0,0,0,.5);
   cursor:pointer;
-  border-radius:12px;
-  box-shadow:0 20px 50px rgba(0,0,0,.45);
   display:flex;
   align-items:center;
   justify-content:center;
   color:gold;
-  font-size:42px;
-  font-weight:800;
+  font-size:44px;
+  font-weight:900;
   z-index:5;
-  transition:.4s;
 }
-.envelope:hover{
-  transform:translate(-50%,-50%) scale(1.05);
-}
-.envelope::before{
-  content:"";
+
+/* NẮP */
+.flap{
   position:absolute;
   top:0;
   left:0;
   width:0;
   height:0;
-  border-left:130px solid transparent;
-  border-right:130px solid transparent;
-  border-top:85px solid #a80000;
+  border-left:140px solid transparent;
+  border-right:140px solid transparent;
+  border-top:90px solid #a80000;
+  transform-origin:top;
+  transition:1.5s ease;
+}
+.envelope.open .flap{
+  transform:rotateX(180deg);
 }
 
 /* THƯ */
@@ -71,28 +71,30 @@ body{
   width:85%;
   max-width:720px;
   background:#fff8e7;
-  padding:32px;
-  border-radius:22px;
-  box-shadow:0 25px 60px rgba(0,0,0,.45);
-  top:50%;
+  padding:36px;
+  border-radius:24px;
+  box-shadow:0 30px 70px rgba(0,0,0,.5);
+  top:55%;
   left:50%;
-  transform:translate(-50%,-50%) scale(0);
-  transition:.8s cubic-bezier(.25,1.5,.5,1);
+  transform:translate(-50%,-50%) translateY(80px) scale(.7);
+  opacity:0;
+  transition:1.8s ease;
   z-index:10;
-  overflow:auto;
   max-height:85vh;
+  overflow:auto;
 }
 .letter.show{
-  transform:translate(-50%,-50%) scale(1);
+  opacity:1;
+  transform:translate(-50%,-50%) translateY(0) scale(1);
 }
-.letter h2{
+.close{
+  position:absolute;
+  top:14px;
+  right:18px;
+  font-size:22px;
+  cursor:pointer;
   color:#c00000;
-  text-align:center;
-}
-.letter p{
-  line-height:1.8;
-  color:#333;
-  font-size:15px;
+  font-weight:bold;
 }
 
 /* PHÁO HOA */
@@ -102,49 +104,61 @@ body{
   height:6px;
   background:transparent;
   border-radius:50%;
-  animation:explode 1.5s ease-out forwards;
+  animation:explode 1.6s ease-out forwards;
   pointer-events:none;
 }
 @keyframes explode{
   to{
     box-shadow:
-      0 -120px gold,
-      85px -85px red,
-      120px 0 orange,
-      85px 85px pink,
-      0 120px yellow,
-      -85px 85px red,
-      -120px 0 orange,
-      -85px -85px gold;
+      0 -140px gold,
+      100px -100px red,
+      140px 0 orange,
+      100px 100px pink,
+      0 140px yellow,
+      -100px 100px red,
+      -140px 0 orange,
+      -100px -100px gold;
     opacity:0;
   }
 }
 
-/* NÚT QUAY LẠI */
+/* CHỮ PHÁO HOA */
+.text-fire{
+  position:fixed;
+  font-size:72px;
+  font-weight:900;
+  color:gold;
+  text-shadow:0 0 35px red;
+  pointer-events:none;
+}
+
+/* QUAY LẠI */
 .back-home{
   position:fixed;
   bottom:20px;
   left:50%;
   transform:translateX(-50%);
   background:linear-gradient(45deg,gold,orange);
-  color:#8b0000;
+  color:#7a0000;
   padding:12px 28px;
   border-radius:40px;
-  text-decoration:none;
   font-weight:bold;
-  box-shadow:0 10px 30px rgba(0,0,0,.45);
+  text-decoration:none;
   z-index:99;
-}
-.back-home:hover{
-  transform:translateX(-50%) scale(1.08);
 }
 </style>
 </head>
 
 <body>
 
-<!-- BAO THƯ -->
-<div class="envelope" onclick="openLetter()">10A7</div>
+<!-- ÂM THANH PHÁO -->
+<audio id="fireSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_52cfd7c3b7.mp3"></audio>
+
+<!-- PHONG BÌ -->
+<div class="envelope" onclick="openEnvelope()">
+  <div class="flap"></div>
+  10A7
+</div>
 
 <!-- THƯ -->
 <div id="letter" class="letter">
@@ -184,41 +198,61 @@ body{
   </p>
 </div>
 
-<!-- NÚT QUAY LẠI -->
-<a href="https://huyg15235-lgtm.github.io/tet10a7/#" class="back-home">
-  ⬅ Quay lại trang chính
+<a class="back-home" href="https://huyg15235-lgtm.github.io/tet10a7/#">
+⬅ Quay lại trang chính
 </a>
 
 <script>
-/* MỞ THƯ */
-function openLetter(){
-  document.querySelector('.envelope').style.display='none';
-  document.getElementById('letter').classList.add('show');
-  fireworks();
-}
-
 /* HOA RƠI */
-const flowers=["🌸","🌺","🌼","🌼"];
-for(let i=0;i<35;i++){
+const flowers=["🌸","🌼","🌺"];
+for(let i=0;i<40;i++){
   let f=document.createElement("div");
   f.className="flower";
   f.innerText=flowers[Math.floor(Math.random()*flowers.length)];
   f.style.left=Math.random()*100+"vw";
-  f.style.animationDuration=5+Math.random()*6+"s";
+  f.style.animationDuration=6+Math.random()*6+"s";
   f.style.fontSize=18+Math.random()*22+"px";
   document.body.appendChild(f);
 }
 
-/* PHÁO HOA */
-function fireworks(){
-  setInterval(()=>{
-    let fw=document.createElement("div");
-    fw.className="firework";
-    fw.style.left=Math.random()*100+"vw";
-    fw.style.top=Math.random()*60+"vh";
-    document.body.appendChild(fw);
-    setTimeout(()=>fw.remove(),1500);
-  },350);
+/* MỞ PHONG BÌ */
+function openEnvelope(){
+  document.querySelector('.envelope').classList.add('open');
+  setTimeout(()=>{
+    document.getElementById('letter').classList.add('show');
+  },1200);
+}
+
+/* ĐÓNG THƯ → TIẾNG PHÁO + CHỮ 10A7 */
+function closeLetter(){
+  document.getElementById('letter').classList.remove('show');
+  document.getElementById("fireSound").play();
+  fireText("10A7");
+}
+
+/* PHÁO HOA THEO CHỮ */
+function fireText(text){
+  let container=document.createElement("div");
+  container.className="text-fire";
+  container.innerText=text;
+  container.style.top="40%";
+  container.style.left="50%";
+  container.style.transform="translateX(-50%)";
+  document.body.appendChild(container);
+
+  let rect=container.getBoundingClientRect();
+  for(let i=0;i<60;i++){
+    setTimeout(()=>{
+      let fw=document.createElement("div");
+      fw.className="firework";
+      fw.style.left=rect.left+Math.random()*rect.width+"px";
+      fw.style.top=rect.top+Math.random()*rect.height+"px";
+      document.body.appendChild(fw);
+      setTimeout(()=>fw.remove(),1600);
+    },i*120);
+  }
+
+  setTimeout(()=>container.remove(),5000);
 }
 </script>
 
