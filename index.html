@@ -150,6 +150,31 @@ body{
   text-decoration:none;
   z-index:99;
 }
+/* DÒNG GỢI Ý NHẤP */
+.hint-text{
+  position:absolute;
+  top:calc(50% - 140px);
+  left:50%;
+  transform:translateX(-50%);
+  color:gold;
+  font-weight:600;
+  font-size:18px;
+  text-shadow:0 0 15px rgba(255,215,0,.8);
+  animation:blink 1.6s infinite;
+  z-index:6;
+  pointer-events:none;
+  transition:.6s ease;
+}
+
+@keyframes blink{
+  0%,100%{opacity:1}
+  50%{opacity:.3}
+}
+
+.hint-text.hide{
+  opacity:0;
+  transform:translateX(-50%) translateY(-20px);
+}
 </style>
 </head>
 
@@ -159,6 +184,10 @@ body{
 <audio id="fireSound" src="https://cdn.pixabay.com/audio/2022/03/15/audio_52cfd7c3b7.mp3"></audio>
 
 <!-- PHONG BÌ -->
+<div id="hint" class="hint-text">
+  👆 Nhấp vào phong bì để mở thư chúc Tết
+</div>
+  
 <div class="envelope" onclick="openEnvelope()">
   <div class="flap"></div>
   10A7
@@ -221,6 +250,15 @@ for(let i=0;i<40;i++){
 
 /* MỞ PHONG BÌ */
 function openEnvelope(){
+  document.querySelector('.envelope').classList.add('open');
+
+  // ẨN DÒNG "NHẤP VÀO PHONG BÌ"
+  document.getElementById('hint').classList.add('hide');
+
+  setTimeout(()=>{
+    document.getElementById('letter').classList.add('show');
+  },1200);
+}
   document.querySelector('.envelope').classList.add('open');
   setTimeout(()=>{
     document.getElementById('letter').classList.add('show');
